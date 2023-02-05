@@ -6,3 +6,4 @@
 [submodule "pkg/s-lib"]
 	path = pkg/s-lib
 	url = https://github.com/Nav1Cr0ss/s-lib
+	branch = main

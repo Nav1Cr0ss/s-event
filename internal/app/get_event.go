@@ -7,6 +7,6 @@ import (
 )
 
 func (a Application) GetEvent(ctx context.Context, id int32) (repo.GetEventRow, error) {
-	//TODO implement me
-	panic("implement me")
+
+	return a.repo.GetEvent(ctx, id)
 }

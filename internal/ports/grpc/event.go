@@ -5,8 +5,8 @@ import (
 	"log"
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
-	pbevent "github.com/Nav1Cr0ss/s-event/pkg/s-design/events_proto/gen/grpc"
-	"github.com/Nav1Cr0ss/s-event/pkg/s-lib/enum"
+	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
+	"github.com/Nav1Cr0ss/s-lib/enum"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -37,15 +37,6 @@ func (h GRPCHandler) CreateEvent(ctx context.Context, req *pbevent.CreateEventRe
 
 }
 
-func GetArrayOfStrings[T ~string](A []T) []string {
-	var tmp []string
-
-	for _, val := range A {
-		tmp = append(tmp, string(val))
-	}
-
-	return tmp
-}
 func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest) (*pbevent.GetEventResponse, error) {
 	var (
 		err   error
@@ -71,8 +62,6 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 			CreatedAt:   timestamppb.New(event.CreatedAt),
 		},
 		EventSettings: &pbevent.EventSettings{
-			//Id:              123,
-			//EventId:         event.,
 			MaxParticipants: event.MaxParticipants,
 			MinParticipants: event.MinParticipants,
 			Visibility:      enum.GetArrayOfStrings(event.Visibility),

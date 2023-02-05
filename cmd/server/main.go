@@ -6,7 +6,7 @@ import (
 	repository "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	"github.com/Nav1Cr0ss/s-event/internal/app"
 	handler "github.com/Nav1Cr0ss/s-event/internal/ports/grpc"
-	pbevent "github.com/Nav1Cr0ss/s-event/pkg/s-design/events_proto/gen/grpc"
+	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
 	"github.com/Nav1Cr0ss/s-event/server"
 	"github.com/Nav1Cr0ss/s-lib/logger"
 	"go.uber.org/fx"
