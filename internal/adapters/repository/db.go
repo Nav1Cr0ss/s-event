@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/Nav1Cr0ss/s-auth/config"
+	"github.com/Nav1Cr0ss/s-event/config"
 	"github.com/Nav1Cr0ss/s-lib/logger"
 )
 

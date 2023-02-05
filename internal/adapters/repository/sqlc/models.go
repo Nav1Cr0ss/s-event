@@ -53,6 +53,16 @@ func (ns NullEventTypeEnum) Value() (driver.Value, error) {
 	return ns.EventTypeEnum, nil
 }
 
+func (e EventTypeEnum) Valid() bool {
+	switch e {
+	case EventTypeEnumOnline,
+		EventTypeEnumOffline,
+		EventTypeEnumMixed:
+		return true
+	}
+	return false
+}
+
 func AllEventTypeEnumValues() []EventTypeEnum {
 	return []EventTypeEnum{
 		EventTypeEnumOnline,
@@ -104,6 +114,16 @@ func (ns NullEventVisibilityEnum) Value() (driver.Value, error) {
 	return ns.EventVisibilityEnum, nil
 }
 
+func (e EventVisibilityEnum) Valid() bool {
+	switch e {
+	case EventVisibilityEnumMale,
+		EventVisibilityEnumFemale,
+		EventVisibilityEnumThird:
+		return true
+	}
+	return false
+}
+
 func AllEventVisibilityEnumValues() []EventVisibilityEnum {
 	return []EventVisibilityEnum{
 		EventVisibilityEnumMale,
@@ -114,7 +134,7 @@ func AllEventVisibilityEnumValues() []EventVisibilityEnum {
 
 type Event struct {
 	ID          int32
-	Author      string
+	AuthorID    string
 	Title       string
 	Description string
 	Type        EventTypeEnum

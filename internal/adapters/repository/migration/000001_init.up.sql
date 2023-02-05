@@ -2,7 +2,7 @@ CREATE TYPE event_type_enum AS ENUM ('online', 'offline', 'mixed');
 CREATE TABLE "event"
 (
     "id"          serial PRIMARY KEY,
-    "author"      varchar(255)    NOT NULL,
+    "author_id"   varchar(255)    NOT NULL,
     "title"       varchar(255)    NOT NULL,
     "description" varchar(255)    NOT NULL,
     "type"        event_type_enum NOT NULL,
