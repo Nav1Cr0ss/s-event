@@ -1,9 +1,8 @@
 module github.com/Nav1Cr0ss/s-event
 
-go 1.20
+go 1.19
 
 require (
-	github.com/Nav1Cr0ss/s-lib v0.0.0-20230204153941-287bf9f3532d
 	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/joho/godotenv v1.5.0
 	github.com/kelseyhightower/envconfig v1.4.0

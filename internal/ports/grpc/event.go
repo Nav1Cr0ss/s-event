@@ -6,7 +6,7 @@ import (
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	pbevent "github.com/Nav1Cr0ss/s-event/pkg/s-design/events_proto/gen/grpc"
-	"github.com/Nav1Cr0ss/s-lib/enum"
+	"github.com/Nav1Cr0ss/s-event/pkg/s-lib/enum"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -75,7 +75,7 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 			//EventId:         event.,
 			MaxParticipants: event.MaxParticipants,
 			MinParticipants: event.MinParticipants,
-			Visibility:      GetArrayOfStrings(event.Visibility),
+			Visibility:      enum.GetArrayOfStrings(event.Visibility),
 		},
 	}
 	return &resp, nil
