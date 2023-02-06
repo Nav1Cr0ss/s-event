@@ -40,11 +40,24 @@ func (h GRPCHandler) CreateEvent(ctx context.Context, req *pbevent.CreateEventRe
 
 }
 
+type User struct {
+	Id int `json:"id"`
+}
+
 func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest) (*pbevent.GetEventResponse, error) {
 	var (
 		err   error
 		event repo.GetEventRow
 	)
+	//md, _ := metadata.FromIncomingContext(ctx)
+	//user := md.Get("user")[0]
+	//
+	//us := User{}
+	//err = json.Unmarshal([]byte(user), &us)
+	//if err != nil {
+	//	return nil, err
+	//}
+
 	err = req.Validate()
 	if err != nil {
 		return nil, err

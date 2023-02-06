@@ -9,15 +9,22 @@ import (
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
 	"github.com/Nav1Cr0ss/s-event/server"
 	"github.com/Nav1Cr0ss/s-lib/logger"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"go.uber.org/fx"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
 func main() {
+
 	fx.New(
 		fx.Provide(
 			config.NewConfiguration,
-			func(cfg *config.Config) *logger.Logger {
+			func(cfg *config.Config) (*logger.Logger, *zap.Logger) {
 				return logger.NewLogger(cfg.Debug)
 			},
 			fx.Annotate(
@@ -32,7 +39,15 @@ func main() {
 			server.StartListen,
 
 			fx.Annotate(
-				grpc.NewServer,
+				func(log *zap.Logger) *grpc.Server {
+					options := grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+						grpc_ctxtags.UnaryServerInterceptor(),
+						grpc_zap.UnaryServerInterceptor(log),
+						grpc_validator.UnaryServerInterceptor(),
+						grpc_recovery.UnaryServerInterceptor(),
+					))
+					return grpc.NewServer(options)
+				},
 				fx.As(new(grpc.ServiceRegistrar)),
 			),
 			fx.Annotate(
@@ -41,7 +56,10 @@ func main() {
 			),
 		),
 		fx.Invoke(
-			pbevent.RegisterEventServiceServer,
+			func(s grpc.ServiceRegistrar, srv pbevent.EventServiceServer, log *logger.Logger) {
+				log.Info("start app")
+				pbevent.RegisterEventServiceServer(s, srv)
+			},
 			server.StartServer,
 		),
 	).Run()

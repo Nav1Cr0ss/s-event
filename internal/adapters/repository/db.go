@@ -11,7 +11,7 @@ import (
 type DataBase struct {
 }
 
-func NewDB(c *config.Config, log *logger.Logger) (*sql.DB, error) {
+func NewDB(c *config.Config, log *logger.Logger) *sql.DB {
 	db, err := sql.Open(
 		"postgres",
 		fmt.Sprintf(
@@ -20,9 +20,12 @@ func NewDB(c *config.Config, log *logger.Logger) (*sql.DB, error) {
 		),
 	)
 	if err != nil {
-		log.Errorf("failed on create db conn : %s", err)
-		return nil, err
+		log.Fatalf("failed on create db conn : %s", err)
+	}
+	err = db.Ping()
+	if err != nil {
+		log.Fatalf("failed on pinging conn : %s", err)
 	}
 	log.Info("db connection initialized")
-	return db, nil
+	return db
 }
