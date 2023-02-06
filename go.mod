@@ -2,6 +2,8 @@ module github.com/Nav1Cr0ss/s-event
 
 go 1.19
 
+replace github.com/Nav1Cr0ss/s-lib => ./pkg/s-lib
+
 require (
 	github.com/Nav1Cr0ss/s-lib v0.0.0-20230205190204-0650a2b99e82
 	github.com/envoyproxy/protoc-gen-validate v0.9.1

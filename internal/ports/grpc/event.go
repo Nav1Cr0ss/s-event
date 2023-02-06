@@ -1,13 +1,16 @@
 package handler
 
 import (
-	"context"
 	"log"
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
-	"github.com/Nav1Cr0ss/s-lib/enum"
+	"github.com/Nav1Cr0ss/s-lib/strings"
 	"google.golang.org/protobuf/types/known/timestamppb"
+)
+
+import (
+	"context"
 )
 
 func (h GRPCHandler) CreateEvent(ctx context.Context, req *pbevent.CreateEventRequest) (*pbevent.CreateEventResponse, error) {
@@ -64,7 +67,7 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 		EventSettings: &pbevent.EventSettings{
 			MaxParticipants: event.MaxParticipants,
 			MinParticipants: event.MinParticipants,
-			Visibility:      enum.GetArrayOfStrings(event.Visibility),
+			Visibility:      strings.GetArrayOfStrings(event.Visibility),
 		},
 	}
 	return &resp, nil
