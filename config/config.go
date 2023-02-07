@@ -1,11 +1,11 @@
 package config
 
 type DBConfig struct {
-	UserName string `required:"true" envconfig:"DB_USERNAME" `
-	Port     int    `required:"true" envconfig:"DB_PORT"`
-	Host     string `required:"true" envconfig:"DB_HOST"`
-	Password string `required:"true" envconfig:"DB_PASSWORD"`
-	Name     string `required:"true" envconfig:"DB_NAME"`
+	UserName string `required:"true" envconfig:"USERNAME" `
+	Port     int    `required:"true" envconfig:"PORT"`
+	Host     string `required:"true" envconfig:"HOST"`
+	Password string `required:"true" envconfig:"PASSWORD"`
+	Name     string `required:"true" envconfig:"NAME"`
 }
 
 type AppConfig struct {
