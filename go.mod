@@ -5,7 +5,7 @@ go 1.19
 replace github.com/Nav1Cr0ss/s-lib => ./pkg/s-lib
 
 require (
-	github.com/Nav1Cr0ss/s-lib v0.0.0-20230206224827-115262e0e939
+	github.com/Nav1Cr0ss/s-lib v0.0.0-20230207083835-67bd4cdb95e4
 	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/joho/godotenv v1.5.1
