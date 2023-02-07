@@ -19,12 +19,7 @@ migratedown:
 sqlc:
 	sqlc --file internal/adapters/repository/sqlcConfig.yaml generate
 
-openapi:
-	swagger-cli bundle ./design/_docs.yaml --outfile api/openapi.yaml --type yaml
-api:
-	oapi-codegen --config design/models.cfg.yaml api/openapi.yaml && oapi-codegen --config design/server.cfg.yaml api/openapi.yaml
-run:
 
 
 
-.PHONY: sqlc openapi api
+.PHONY: sqlc migratedown migrateup dropdb createdb postgres

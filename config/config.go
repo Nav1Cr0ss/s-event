@@ -1,14 +1,5 @@
 package config
 
-import (
-	"log"
-	"os"
-	"time"
-
-	"github.com/joho/godotenv"
-	"github.com/kelseyhightower/envconfig"
-)
-
 type DBConfig struct {
 	UserName string `required:"true" envconfig:"DB_USERNAME" `
 	Port     int    `required:"true" envconfig:"DB_PORT"`
@@ -17,52 +8,43 @@ type DBConfig struct {
 	Name     string `required:"true" envconfig:"DB_NAME"`
 }
 
-type Config struct {
-	Db    DBConfig
+type AppConfig struct {
 	Debug bool   `required:"true" envconfig:"DEBUG"`
 	Port  int    `required:"true" envconfig:"PORT"`
 	Host  string `required:"true" envconfig:"HOST"`
-
-	Rate       float32
-	Timeout    time.Duration
-	ColorCodes map[string]int
 }
 
-func NewConfiguration(prefixes ...string) (c *Config, err error) {
-	var (
-		prefix string
-	)
-	c = &Config{}
-	err = loadDotEnv()
-	if err != nil {
-		return
-	}
-	if len(prefixes) > 0 {
-		prefix = prefixes[0]
-	}
-
-	if err = envconfig.Process(prefix, c); err != nil {
-		_ = envconfig.Usage(prefix, c)
-		log.Fatal("failed on parse configs")
-		return
-	}
-
-	return
+type Config struct {
+	DB  DBConfig
+	App AppConfig
 }
 
-func loadDotEnv() error {
-	envPath := os.Getenv("ENV_FILE")
+func (c *Config) GetDebug() bool {
+	return c.App.Debug
+}
+func (c *Config) GetHost() string {
+	return c.App.Host
+}
+func (c *Config) GetPort() int {
+	return c.App.Port
+}
 
-	var err error
-	if envPath == "" {
-		_ = godotenv.Load(".env") // ignore error by default
-	} else {
-		err = godotenv.Load(envPath) // if path to env file defined, check error
-	}
+func (c *Config) GetDBUserName() string {
+	return c.DB.UserName
+}
 
-	if err != nil {
-		return err
-	}
+func (c *Config) GetDBPassword() string {
+	return c.DB.Password
+}
 
-	return nil
+func (c *Config) GetDBHost() string {
+	return c.DB.Host
+}
+
+func (c *Config) GetDBPort() int {
+	return c.DB.Port
+}
+
+func (c *Config) GetDBName() string {
+	return c.DB.Name
 }

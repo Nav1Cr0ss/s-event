@@ -11,3 +11,8 @@ func (a Application) CreateEvent(ctx context.Context, arg repo.CreateEventParams
 	return a.repo.CreateEvent(ctx, arg)
 
 }
+
+func (a Application) GetEvent(ctx context.Context, id int32) (repo.GetEventRow, error) {
+
+	return a.repo.GetEvent(ctx, id)
+}
