@@ -9,7 +9,6 @@ import (
 	"github.com/Nav1Cr0ss/s-lib/database"
 	"github.com/Nav1Cr0ss/s-lib/grpc_server"
 	"github.com/Nav1Cr0ss/s-lib/logger"
-	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -20,7 +19,7 @@ func ProvideConfig() *config.Config {
 	return cfg
 }
 
-func ProvideLogger(cfg *config.Config) (*logger.Logger, *zap.Logger) {
+func ProvideLogger(cfg *config.Config) *logger.Logger {
 	return logger.NewLogger(cfg.App.Debug)
 }
 
@@ -28,8 +27,8 @@ func ProvideDb(c *config.Config, log *logger.Logger) *sql.DB {
 	return database.NewDB(c, log)
 }
 
-func ProvideGRPCServer(cfg *config.Config, log *logger.Logger, zapLogger *zap.Logger) *grpc_server.GRPCServer {
-	return grpc_server.NewGRPCServer(cfg, log, zapLogger)
+func ProvideGRPCServer(cfg *config.Config, log *logger.Logger) *grpc_server.GRPCServer {
+	return grpc_server.NewGRPCServer(cfg, log)
 }
 
 func InvokeRegisterService(cfg *config.Config, s *grpc_server.GRPCServer, h pbevent.EventServiceServer) {
