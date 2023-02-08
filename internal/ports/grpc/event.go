@@ -5,6 +5,7 @@ import (
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
+	"github.com/Nav1Cr0ss/s-lib/interceptor"
 	"github.com/Nav1Cr0ss/s-lib/strings"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -57,7 +58,8 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 	//if err != nil {
 	//	return nil, err
 	//}
-
+	user := ctx.Value("User").(interceptor.User)
+	_ = user
 	err = req.Validate()
 	if err != nil {
 		return nil, err
