@@ -5,8 +5,9 @@ import (
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
-	"github.com/Nav1Cr0ss/s-lib/interceptor"
 	"github.com/Nav1Cr0ss/s-lib/strings"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -50,19 +51,9 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 		err   error
 		event repo.GetEventRow
 	)
-	//md, _ := metadata.FromIncomingContext(ctx)
-	//user := md.Get("user")[0]
-	//
-	//us := User{}
-	//err = json.Unmarshal([]byte(user), &us)
-	//if err != nil {
-	//	return nil, err
-	//}
-	user := ctx.Value("User").(interceptor.User)
-	_ = user
-	err = req.Validate()
-	if err != nil {
-		return nil, err
+
+	if !h.getUser(ctx).CheckPermission("GetEvent") {
+		return nil, status.Errorf(codes.PermissionDenied, "user doesn't have permissions to do this")
 	}
 
 	event, err = h.a.GetEvent(ctx, req.EventId)
