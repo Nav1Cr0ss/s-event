@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Nav1Cr0ss/s-event/internal/app"
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
@@ -24,11 +25,11 @@ func NewGRPCHandler(log *logger.Logger, a app.Application) GRPCHandler {
 	return h
 }
 
-func (h GRPCHandler) getUser(ctx context.Context) user.User {
+func (h GRPCHandler) getUser(ctx context.Context) (user.User, error) {
 	u, ok := ctx.Value("user").(user.User)
 	if !ok {
-		h.log.Fatalf("panic on parsing user")
+		return u, fmt.Errorf("user doesent parsed")
 	}
-	return u
+	return u, nil
 
 }

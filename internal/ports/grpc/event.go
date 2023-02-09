@@ -5,6 +5,7 @@ import (
 
 	repo "github.com/Nav1Cr0ss/s-event/internal/adapters/repository/sqlc"
 	"github.com/Nav1Cr0ss/s-event/pkg/s-design/pbevent/gen/pbevent"
+	"github.com/Nav1Cr0ss/s-lib/domains/user"
 	"github.com/Nav1Cr0ss/s-lib/strings"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -50,9 +51,15 @@ func (h GRPCHandler) GetEvent(ctx context.Context, req *pbevent.GetEventRequest)
 	var (
 		err   error
 		event repo.GetEventRow
+		u     user.User
 	)
 
-	if !h.getUser(ctx).CheckPermission("GetEvent") {
+	u, err = h.getUser(ctx)
+
+	if err != nil {
+		return nil, status.Errorf(codes.PermissionDenied, "user doesn't have permissions to do this")
+	}
+	if !u.CheckPermission("GetEvent") {
 		return nil, status.Errorf(codes.PermissionDenied, "user doesn't have permissions to do this")
 	}
 

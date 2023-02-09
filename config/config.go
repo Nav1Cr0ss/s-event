@@ -9,9 +9,10 @@ type DBConfig struct {
 }
 
 type AppConfig struct {
-	Debug bool   `required:"true" envconfig:"DEBUG"`
-	Port  int    `required:"true" envconfig:"PORT"`
-	Host  string `required:"true" envconfig:"HOST"`
+	Debug    bool   `required:"true" envconfig:"DEBUG"`
+	Port     int    `required:"true" envconfig:"PORT"`
+	Host     string `required:"true" envconfig:"HOST"`
+	LogLevel string `envconfig:"HOST" default:"info"`
 }
 
 type Config struct {
