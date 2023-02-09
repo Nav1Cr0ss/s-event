@@ -5,7 +5,7 @@ go 1.19
 replace github.com/Nav1Cr0ss/s-lib => ./pkg/s-lib
 
 require (
-	github.com/Nav1Cr0ss/s-lib v0.0.0-20230207083835-67bd4cdb95e4
+	github.com/Nav1Cr0ss/s-lib v0.0.0-20230209104544-08a280215e48
 	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/lib/pq v1.10.7
 	go.uber.org/fx v1.19.1
@@ -16,6 +16,7 @@ require (
 
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

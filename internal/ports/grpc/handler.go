@@ -30,6 +30,6 @@ func (h GRPCHandler) getUser(ctx context.Context) (user.User, error) {
 	if !ok {
 		return u, fmt.Errorf("user doesent parsed")
 	}
-	return u, nil
 
+	return u, nil
 }
